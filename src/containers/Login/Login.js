@@ -2,7 +2,36 @@ import React, { useState } from 'react';
 import Input from '../../components/UI/Input/Input'
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
+import SnackBar from '../../components/UI/SnackBar/SnackBar'
+//--material--
+
+
+//----
 const Login = ()=>{
+    //---SnackBar----//
+    let snackBar = <SnackBar></SnackBar>;
+    const [open, setOpen] = React.useState({open:false,message:''});
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+    //----End of Snack Bar ----//
+    //----form Styling------//
+    const formSytle={
+        margin: '10% 22%',
+        width: '60%',
+        border: '1px solid',
+        padding: '2%',
+        borderRadius: '20px'
+    }
     let history = useHistory();
     const initialState={
         submitted:false,
@@ -40,6 +69,7 @@ const Login = ()=>{
             }
         }
     }
+    const [LoginStatus, setLoginStatus] = useState(initialState);
     const checkValidity=(value,rules)=>{
         let isValid = false;
         if(rules.required){
@@ -84,11 +114,14 @@ const Login = ()=>{
         .then(resp=>{
             history.push('/home');
         })
-        .catch(error=>console.log(error.response.data.msg.message || error.response.data.msg));
+        .catch(error=>{
+            console.log(snackBar);
+            console.log(error.response.data.msg.message || error.response.data.msg);
+            setOpen({open:true,message:error.response.data.msg.message || error.response.data.msg});
+        });
 
 
     }
-    const [LoginStatus, setLoginStatus] = useState(initialState);
     let elementArray = [];
     for(let key in LoginStatus.loginForm){
         elementArray.push({
@@ -117,8 +150,17 @@ const Login = ()=>{
         </form>
     )
     return(
-        <div>
+        
+        <div style={formSytle} className="container text-center">
+            <h3>Admin Login</h3>
+            <hr></hr>
         {form}
+        <SnackBar
+                 message = {open.message}
+                 style= 'error'
+                 open={open.open}
+                 onClose = {handleClose}
+                  ></SnackBar>     
         </div>
     )
 

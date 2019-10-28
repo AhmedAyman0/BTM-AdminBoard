@@ -6,22 +6,13 @@ const SideBar = () => {
     <div className="bg-light border-right" id="sidebar-wrapper">
       <div className="list-group list-group-flush">
         <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Dashboard
+        <i className="fas fa-chart-line"></i> Dashboard
         </Link>
-        <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Shortcuts
+        <Link to="/shops" className="list-group-item list-group-item-action bg-light">
+        <i className="fas fa-store-alt"></i> Shops
         </Link>
-        <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Overview
-        </Link>
-        <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Events
-        </Link>
-        <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Profile
-        </Link> 
-        <Link href="#" className="list-group-item list-group-item-action bg-light">
-          Status
+        <Link to="/users" className="list-group-item list-group-item-action bg-light">
+        <i className="fas fa-users"></i>Users
         </Link>
       </div>
     </div>
