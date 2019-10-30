@@ -16,7 +16,7 @@ const UsersShops = (props)=>{
     
     }
     const initialState={
-        data:[],
+        data:{},
         new:false,
         form:{
         submitted:false,
@@ -38,6 +38,36 @@ const UsersShops = (props)=>{
                 valid:false
                 
             },
+            imgUrl:{
+                elementType:'input',
+                elementConfig : {
+                    type:'text',
+                    placeholder:'Enter Url of a suitable Image '
+                },
+                label:'Image Url',
+                value:'',
+                error:'',
+                validation : {
+                    required:false
+                },
+                valid:true
+                
+            },
+            category:{
+                elementType:'select',
+                elementConfig:{
+                    options:[
+                    ],
+
+                },
+                label:'Pick a Category',
+                value:'',
+                error:'',
+                validation : {
+                    required:false
+                },
+                valid:true
+            },
             belongsTo :{
                 elementType:'input',
                 elementConfig:{
@@ -57,6 +87,7 @@ const UsersShops = (props)=>{
 }
 const [user, setUser] = useState(initialState);
     const id=props.match.params.id;
+    const url='http://localhost:5000/api/';
     const infoStyle = {
         margin: '16px 0',
         fontSize: '1.6rem',
@@ -65,11 +96,23 @@ const [user, setUser] = useState(initialState);
     }
    
     useEffect(() => {
-        Axios.get('http://localhost:5000/api/users/'+id)
+        Axios.get(url+'users/'+id)
         .then(resp=>{
-            let newState= JSON.parse(JSON.stringify(user));
-            newState.data=resp.data;
-            setUser(newState);
+            Axios.get(url+'category').then(r=>{
+                Axios.get(url+'shops/user/'+id).then(s=>{
+                    console.log('c',r.data)
+                    let newState= JSON.parse(JSON.stringify(user));
+                    console.log(newState)
+                    newState.data=resp.data;
+                    newState.data.shops=s.data;
+                    newState.form.shopForm.belongsTo.value=id;
+                    r.data.map(category=>{
+                       return newState.form.shopForm.category.elementConfig.options.push({value:category._id,displayValue:category.name});
+                    })
+                    newState.form.shopForm.category.value=r.data[0]._id;
+                    setUser(newState);
+                })
+            })
         })
     }, []);
 
@@ -82,7 +125,7 @@ const [user, setUser] = useState(initialState);
         return isValid;
     }
     const newShopHandler =(event)=>{
-        event.preventDefault();
+        event.preventDefault(); 
         const newState = JSON.parse(JSON.stringify(user))
         const updatedForm = JSON.parse(JSON.stringify(newState.form.shopForm))
         newState.form.shopForm=updatedForm;
@@ -93,20 +136,23 @@ const [user, setUser] = useState(initialState);
         for(let key in newState.form.shopForm){
             formData[key] = newState.form.shopForm[key].value;
         }
-        if(!newState.isValid){
+        if(!newState.form.isValid){
             return ;
         }
-        console.log(formData);
-        Axios.post('http://localhost:5000/api/login',formData)
+        console.log('fD',formData);
+        Axios.post(url+'shops',formData)
         .then(resp=>{
             console.log(resp);
+            Axios.get(`${url}/users/${id}`).then(u=>{
+                const newState = JSON.parse(JSON.stringify(user));
+                newState.data=u.data;
+                setUser(newState);
+            })
         })
         .catch(error=>{
             console.log(error.response.data.msg.message || error.response.data.msg);
            
         });
-
-
     }
     const onChangeHandler =(event,elIdentifier)=>{
         console.log(event.target.value);
@@ -162,6 +208,18 @@ const [user, setUser] = useState(initialState);
         newState.new=false;
         setUser(newState);
     }
+    const deleteShop = (shopId)=>{
+        Axios.delete(url+'shops/'+shopId).then(
+            Axios.get(url+'users/'+id)
+            .then(resp=>{
+                let newState= JSON.parse(JSON.stringify(user));
+                console.log(newState)
+                newState.data=resp.data;
+                newState.form.shopForm.belongsTo.value=user.data._id;
+                setUser(newState);
+            })
+        )
+    }
     return(
         <div className="container">
                             
@@ -181,18 +239,28 @@ const [user, setUser] = useState(initialState);
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Items</th>
+                            <th>Category</th>
                             <th>Action</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {user.data.shops?user.data.shops.map(shop=>(
+                            <tr key={shop.id}>
+                            <td>{shop.name}</td>
+                            <td>{shop.category.name}</td>
+                            <td><button onClick={()=>deleteShop(shop._id)} className="btn btn-danger"><i className="fas fa-times"></i></button></td>
+                            </tr>
+                        )
+                        ):null}
+                    </tbody>
                 </table>
             </div>
             <div className="row">
                 <div className="text-left col-md-4">
                     {user.new?
-                      <button onClick={closeNewHandler} className="btn btn-primary"><i class="fas fa-minus"></i></button>
+                      <button onClick={closeNewHandler} className="btn btn-primary"><i className="fas fa-minus"></i></button>
                       :
-                    <button onClick={NewHandler} className="btn btn-primary"><i class="fas fa-plus"></i></button>
+                    <button onClick={NewHandler} className="btn btn-primary"><i className="fas fa-plus"></i></button>
                     }
                     
                 </div>
@@ -204,7 +272,6 @@ const [user, setUser] = useState(initialState);
                         {form}
                     </div>
                  : null}
-                
             </div>
         </div>
     )

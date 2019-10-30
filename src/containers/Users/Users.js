@@ -1,15 +1,14 @@
 import React , {useEffect,useState} from 'react';
 import Axios from 'axios';
 import {Link} from 'react-router-dom';
-import MaterialTable from 'material-table';
 
-Axios.put()
 const Users = ()=>{
     const [users, setUsers] = useState({data:[]});
     useEffect(() => {
         Axios.get('http://localhost:5000/api/users').then((resp)=>{
             console.log(resp.data);
             setUsers({...users,data:resp.data});
+            console.log(users)
         });
     }, []);
     const banHandler = (id)=>{

@@ -8,8 +8,8 @@ const SideBar = () => {
         <Link href="#" className="list-group-item list-group-item-action bg-light">
         <i className="fas fa-chart-line"></i> Dashboard
         </Link>
-        <Link to="/shops" className="list-group-item list-group-item-action bg-light">
-        <i className="fas fa-store-alt"></i> Shops
+        <Link to="/categories" className="list-group-item list-group-item-action bg-light">
+        <i className="fas fa-layer-group"></i> Categories
         </Link>
         <Link to="/users" className="list-group-item list-group-item-action bg-light">
         <i className="fas fa-users"></i>Users

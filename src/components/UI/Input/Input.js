@@ -36,9 +36,10 @@ const Input = props => {
       inputEl = (
         <select 
         onChange={props.changed}
+        value={props.value}
         >
         {props.elementConfig.options.map(option=>(
-            <option value={option.value}>{option.displayValue}</option>
+            <option key={option.value} value={option.value}>{option.displayValue}</option>
         ))}
         </select>
       );
@@ -60,8 +61,8 @@ const Input = props => {
   return (
     <div className="form-group">
       <label htmlFor={props.id} className="">
-        {props.label}
-      </label>
+        {props.label} 
+      </label><br></br>
       {inputEl}
       {displayError(props.error,props.inValid)}
     </div>

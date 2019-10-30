@@ -5,7 +5,7 @@ import Home from './components/Home/Home'
 import {BrowserRouter as Router , Route , Link} from 'react-router-dom';
 import PageWrapper from './containers/PageWrapper/PageWrapper';
 import Login from './containers/Login/Login';
-import Shops from './containers/Shops/Shops'
+import Categories from './containers/Categories/Categories'
 import Users from './containers/Users/Users'
 import UsersShops from './containers/Users/UsersShops/UsersShops'
 function App() {
@@ -20,8 +20,8 @@ function App() {
         >
         </Route>
         <Route
-        path="/shops"
-        component={Shops}
+        path="/categories"
+        component={Categories}
         ></Route>
         <Route
         path="/users/shops/:id"
