@@ -19,12 +19,12 @@ const NavBar = ()=>{
       <ul className="nav navbar-nav ml-auto">
 
         <li className="nav-item">
-        <Link to="/categories" className="list-group-item list-group-item-action bg-light">
+        <Link to="/categories" className="nav-link">
         <i className="fas fa-layer-group"></i> Categories
         </Link>
         </li>
         <li className="nav-item">
-        <Link to="/users" className="list-group-item list-group-item-action bg-light">
+        <Link to="/users" className="nav-link">
         <i className="fas fa-users"></i>Users
         </Link>
         </li>
