@@ -19,10 +19,14 @@ const NavBar = ()=>{
       <ul className="nav navbar-nav ml-auto">
 
         <li className="nav-item">
-          <Link className="nav-link"><span className="fas fa-user"></span> Sign Up</Link>
+        <Link to="/categories" className="list-group-item list-group-item-action bg-light">
+        <i className="fas fa-layer-group"></i> Categories
+        </Link>
         </li>
         <li className="nav-item">
-            <Link className="nav-link" ><span className="fas fa-sign-in-alt"></span> Login </Link>
+        <Link to="/users" className="list-group-item list-group-item-action bg-light">
+        <i className="fas fa-users"></i>Users
+        </Link>
         </li>
 
       </ul>
