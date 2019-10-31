@@ -1,11 +1,11 @@
 import React , {useEffect,useState} from 'react';
 import Axios from 'axios';
 import {Link} from 'react-router-dom';
-
+const URL ='https://pure-sierra-38607.herokuapp.com/api';
 const Users = ()=>{
     const [users, setUsers] = useState({data:[]});
     useEffect(() => {
-        Axios.get('http://localhost:5000/api/users').then((resp)=>{
+        Axios.get(`${URL}/users`).then((resp)=>{
             console.log(resp.data);
             setUsers({...users,data:resp.data});
             console.log(users)
@@ -15,10 +15,10 @@ const Users = ()=>{
         let user = users.data.find(a=>a._id===id);
         console.log('s',user);
         user.banned=true;
-        Axios.put(`http://localhost:5000/api/users/${id}`,user).then(
+        Axios.put(`${URL}/users/${id}`,user).then(
             resp=>{
                 console.log('p',resp)
-            Axios.get('http://localhost:5000/api/users').then((resp)=>{
+            Axios.get(`${URL}/users`).then((resp)=>{
                 console.log(resp.data);
                 setUsers({...users,data:resp.data});
             });
@@ -30,10 +30,10 @@ const Users = ()=>{
         let user = users.data.find(a=>a._id===id);
         console.log('s',user);
         user.banned=false;
-        Axios.put(`http://localhost:5000/api/users/${id}`,user).then(
+        Axios.put(`${URL}/users/${id}`,user).then(
             resp=>{
                 console.log('p',resp)
-            Axios.get('http://localhost:5000/api/users').then((resp)=>{
+            Axios.get(`${URL}/users`).then((resp)=>{
                 console.log(resp.data);
                 setUsers({...users,data:resp.data});
             });

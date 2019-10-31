@@ -1,23 +1,24 @@
 import React , {useEffect,useState} from 'react';
 import Axios from 'axios'
+const URL = 'https://pure-sierra-38607.herokuapp.com/api';
+const Categories = ()=>{
 
-const Shops = ()=>{
-    const [shops, setShops] = useState({data:[]})
+    const [categories, setCategories] = useState({data:[]})
     useEffect(() => {
-        Axios.get('http://localhost:5000/api/categories').then((resp)=>{
+        Axios.get(`${URL}/category`).then((resp)=>{
             console.log(resp.data);
-            setShops({data:resp.data});
+            setCategories({data:resp.data});
         })
     }, []);
 
     return(
         <div className="container">
-        <h1>Shops</h1>
+        <h1>Categories</h1>
         <ul>
-            {shops.data.map(shop=> <li>{shop.name}</li> )}
+            {categories.data.map(shop=> <li>{shop.name}</li> )}
         </ul>
         </div>
     )
 }
 
-export default Shops;
+export default Categories;

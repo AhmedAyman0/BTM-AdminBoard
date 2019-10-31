@@ -87,7 +87,8 @@ const UsersShops = (props)=>{
 }
 const [user, setUser] = useState(initialState);
     const id=props.match.params.id;
-    const url='http://localhost:5000/api/';
+    // const url='http://localhost:5000/api/';
+    const url='https://pure-sierra-38607.herokuapp.com/api/';
     const infoStyle = {
         margin: '16px 0',
         fontSize: '1.6rem',
