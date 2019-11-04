@@ -2,6 +2,7 @@ import React , {useEffect,useState} from 'react';
 import Axios from 'axios';
 import {Link} from 'react-router-dom';
 import Input from '../../../components/UI/Input/Input'
+import { Table } from 'react-bootstrap';
 
 const UsersShops = (props)=>{
     const submitStyle={
@@ -195,7 +196,9 @@ const [user, setUser] = useState(initialState);
             changed={(event)=>element.changed(event,element.elIdentifier)}
               ></Input>
         ))}
-        <button style={submitStyle} className="btn btn-default" type="submit">Submit</button>
+        <div className="text-center">
+        <button style={submitStyle} className="btn btn-default btn-block" type="submit">Submit</button>
+        </div>
         </form>
     )
     const NewHandler = ()=>{
@@ -235,8 +238,8 @@ const [user, setUser] = useState(initialState);
                 
             </div>
             
-            <div className="table-responsive">
-                <table className="table table-bordered">
+            <div className="table-responsive text-center">
+                <Table  bordered size="sm">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -254,7 +257,7 @@ const [user, setUser] = useState(initialState);
                         )
                         ):null}
                     </tbody>
-                </table>
+                </Table>
             </div>
             <div className="row">
                 <div className="text-left col-md-4">

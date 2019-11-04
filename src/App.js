@@ -10,7 +10,7 @@ import Users from './containers/Users/Users'
 import UsersShops from './containers/Users/UsersShops/UsersShops'
 function App() {
   return (
-    <div className="App">
+    <div>
       <Router>
       <PageWrapper> 
         <Route

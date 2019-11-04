@@ -1,6 +1,7 @@
 import React , {useEffect,useState} from 'react';
 import Axios from 'axios';
 import {Link} from 'react-router-dom';
+import {Table} from 'react-bootstrap';
 const URL ='https://pure-sierra-38607.herokuapp.com/api';
 const Users = ()=>{
     const [users, setUsers] = useState({data:[]});
@@ -48,8 +49,8 @@ const Users = ()=>{
                 <span>Current users list</span>
             </div>
             <hr></hr>
-            <div className="table-responsive">
-                <table className="table table-bordered table-condensed">
+            <div className="table-responsive text-center">
+                <Table striped bordered hover size="sm">
                     <thead>
                     <tr>
                         <th>Email</th>
@@ -77,7 +78,7 @@ const Users = ()=>{
             </tr>
             ))}
             </tbody>
-           </table>
+           </Table>
            </div>
         </div>
     )
